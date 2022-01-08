@@ -6,4 +6,18 @@ class GameObject {
         window.gameObjects.push(this);
     }
     update() {}
+    InputControllerEvent(eventName, e) {
+        switch (eventName) {
+            case "click":
+                console.log(eventName);
+                break;
+            case "keydown":
+                console.log(eventName, e);
+                break;
+            case "keyup":
+                break;
+            default:
+                break;
+        }
+    }
 }

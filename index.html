@@ -26,7 +26,7 @@
                 width: 640px;
                 height: 360px;
                 outline: none;
-                /* transform: scale(2); */
+                transform: scale(0.8);
             }
             canvas {
                 image-rendering: pixelated !important;
@@ -52,16 +52,6 @@
         <script>
             const game = new Game(document.getElementById("myCanvas"));
             var debug_collider = false;
-            var obj = new InputController({
-                KeyW: "up",
-                ArrowUp: "up",
-                KeyD: "right",
-                ArrowRight: "right",
-                KeyS: "down",
-                ArrowDown: "down",
-                KeyA: "left",
-                ArrowLeft: "left",
-            });
             const initFunction = async () => {
                 window.obj = new GameObject({
                     x: 50,
@@ -84,6 +74,19 @@
                     },
                     currentAnimation: "especial",
                 });
+                new InputController(
+                    {
+                        KeyW: "up",
+                        ArrowUp: "up",
+                        KeyD: "right",
+                        ArrowRight: "right",
+                        KeyS: "down",
+                        ArrowDown: "down",
+                        KeyA: "left",
+                        ArrowLeft: "left",
+                    },
+                    obj
+                );
                 // window.projetil1 = new Projetil({
                 //     x: -80,
                 //     y: 150,
@@ -92,16 +95,7 @@
                 // });
             };
 
-            game.init(
-                initFunction,
-                { src: "Sprites/sprite_animation.png", name: "pocoes" },
-                { src: "Sprites/11921.jpg", name: "foto1" },
-                { src: "Sprites/2.jpg", name: "foto2" },
-                { src: "Sprites/3.jpg", name: "foto3" },
-                { src: "Sprites/4.jpg", name: "foto4" },
-                { src: "Sprites/5.jpg", name: "foto5" },
-                { src: "Sprites/6.jpg", name: "foto6" }
-            );
+            game.init(initFunction, { src: "Sprites/sprite_animation.png", name: "pocoes" });
         </script>
     </body>
 </html>
