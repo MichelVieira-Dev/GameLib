@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+    <head>
+        <meta charset="UTF-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Document</title>
+        <style>
+            * {
+                margin: 0;
+                box-sizing: border-box;
+            }
+            html,
+            body {
+                height: 100vh;
+                background-color: #333;
+            }
+            main {
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                height: 100vh;
+            }
+            .container-canvas {
+                border: 1px solid #fff;
+                width: 640px;
+                height: 360px;
+                outline: none;
+                /* transform: scale(2); */
+            }
+            canvas {
+                image-rendering: pixelated !important;
+            }
+        </style>
+    </head>
+    <body>
+        <main>
+            <div class="container-canvas">
+                <canvas width="640" height="360" id="myCanvas"></canvas>
+            </div>
+        </main>
+        <script src="Dependencias/auxiliares.js"></script>
+        <script src="Dependencias/classes/AssetsController.js"></script>
+        <script src="Dependencias/classes/Game.js"></script>
+        <script src="Dependencias/classes/InputController.js"></script>
+        <script src="Dependencias/classes/Sprite.js"></script>
+        <script src="Dependencias/classes/SpriteAnimator.js"></script>
+        <script src="Dependencias/classes/GameObject.js"></script>
+        <script src="Dependencias/classes/RigidBody.js"></script>
+        <script src="Dependencias/classes/Projetil.js"></script>
+        <script src="Dependencias/classes/FrameController.js"></script>
+        <script>
+            const game = new Game(document.getElementById("myCanvas"));
+            var debug_collider = false;
+            var obj = new InputController({
+                KeyW: "up",
+                ArrowUp: "up",
+                KeyD: "right",
+                ArrowRight: "right",
+                KeyS: "down",
+                ArrowDown: "down",
+                KeyA: "left",
+                ArrowLeft: "left",
+            });
+            const initFunction = async () => {
+                window.obj = new GameObject({
+                    x: 50,
+                    y: 50,
+                    spriteName: "pocoes",
+                    spriteType: "sheet",
+                    lines: 2,
+                    cols: 5,
+                    animations: {
+                        idle: { frames: [[0, 0]] },
+                        especial: {
+                            ms: 200,
+                            frames: [
+                                [0, 0],
+                                [1, 0],
+                                [2, 0],
+                                [3, 0],
+                            ],
+                        },
+                    },
+                    currentAnimation: "especial",
+                });
+                // window.projetil1 = new Projetil({
+                //     x: -80,
+                //     y: 150,
+                //     target: { x: 5, y: 150 },
+                //     velocity: 1,
+                // });
+            };
+
+            game.init(
+                initFunction,
+                { src: "Sprites/sprite_animation.png", name: "pocoes" },
+                { src: "Sprites/11921.jpg", name: "foto1" },
+                { src: "Sprites/2.jpg", name: "foto2" },
+                { src: "Sprites/3.jpg", name: "foto3" },
+                { src: "Sprites/4.jpg", name: "foto4" },
+                { src: "Sprites/5.jpg", name: "foto5" },
+                { src: "Sprites/6.jpg", name: "foto6" }
+            );
+        </script>
+    </body>
+</html>
