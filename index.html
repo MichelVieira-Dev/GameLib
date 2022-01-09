@@ -23,10 +23,12 @@
             }
             .container-canvas {
                 border: 1px solid #fff;
-                width: 640px;
-                height: 360px;
+                /* width: 640px;
+                height: 360px; */
+                width: 1280px;
+                height: 720px;
                 outline: none;
-                transform: scale(1.3);
+                /* transform: scale(2); */
             }
             canvas {
                 image-rendering: pixelated !important;
@@ -36,7 +38,8 @@
     <body>
         <main>
             <div class="container-canvas">
-                <canvas width="640" height="360" id="myCanvas"></canvas>
+                <!-- <canvas width="640" height="360" id="myCanvas"></canvas> -->
+                <canvas width="1280" height="720" id="myCanvas"></canvas>
             </div>
         </main>
         <script src="Dependencias/auxiliares.js"></script>
@@ -52,10 +55,13 @@
         <script src="Dependencias/classes/ParticlesAnimation.js"></script>
         <script src="Dependencias/classes/Projetil.js"></script>
         <script src="Dependencias/classes/FrameController.js"></script>
+        <script src="Dependencias/classes/Map/worldMap.js"></script>
+        <script src="Dependencias/classes/Map/mapController.js"></script>
         <script>
             const game = new Game(document.getElementById("myCanvas"));
-            var debug_collider = false;
+            var debug_collider = true;
             const initFunction = async () => {
+                window.worldmap = new Map({ spriteName: "worldmap" });
                 window.obj = new GameObject({
                     x: 50,
                     y: 50,
@@ -87,7 +93,11 @@
                 // });
             };
 
-            game.init(initFunction, { src: "Sprites/sprite_animation.png", name: "pocoes" });
+            game.init(
+                initFunction,
+                { src: "Sprites/sprite_animation.png", name: "pocoes" },
+                { src: "mapa/map2.png", name: "worldmap" }
+            );
         </script>
     </body>
 </html>

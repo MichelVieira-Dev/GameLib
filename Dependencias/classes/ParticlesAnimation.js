@@ -10,8 +10,8 @@ class ParticleAnimation {
         let now = new Date().getTime();
         if (now > this.lastGenerate) {
             this.lastGenerate = now + this.ms;
-            let colors = ["green", "green"];
-            let strokeColors = ["#333", "#666"];
+            let colors = ["blue", "blue"];
+            let strokeColors = ["#fff", "#fff"];
             let myColor = getRandomInt(0, colors.length - 1);
             let size = getRandomInt(2, 4);
             new Particles({

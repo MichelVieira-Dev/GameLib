@@ -25,6 +25,7 @@ class Game {
             ArrowLeft: "left",
             Space: "space",
         });
+
         Game.GameLoop();
     }
 
@@ -39,10 +40,14 @@ class Game {
             return !obj.destroy;
         });
 
+        Game.ctx.save();
+        Game.ctx.translate(window.worldmap.img.width, window.worldmap.img.height);
         window.gameObjects.map((obj) => {
+            Game.ctx.globalAlpha = 1;
             obj.update();
             obj.draw();
         });
+        Game.ctx.restore();
 
         // window.gameObjects.map((obj) => {
         //     obj.draw();

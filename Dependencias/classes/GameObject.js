@@ -22,6 +22,9 @@ class GameObject {
         this.velocity = this.velocityOriginal;
     }
     update() {
+        if (this.sprite.type != "sheet") {
+            return;
+        }
         if (InputController.keysPressed.length > 0) {
             if (this.moveMap.hasOwnProperty(InputController.keysPressed[0]))
                 this.move(this.moveMap[InputController.keysPressed[0]]);

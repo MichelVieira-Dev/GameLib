@@ -87,7 +87,7 @@ Particles.prototype.update = function () {
 };
 
 Particles.prototype.draw = function () {
-    Game.ctx.save();
+    // Game.ctx.save();
     if (this.sprite.type == "rect") {
         Game.ctx.fillStyle = this.sprite.color;
         Game.ctx.globalAlpha = this.alpha;
@@ -101,5 +101,5 @@ Particles.prototype.draw = function () {
         Game.ctx.fill();
         Game.ctx.stroke();
     }
-    Game.ctx.restore();
+    // Game.ctx.restore();
 };

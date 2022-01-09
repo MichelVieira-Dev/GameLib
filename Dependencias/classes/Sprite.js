@@ -6,8 +6,11 @@ class Sprite {
         this.type = spriteType || "single";
         if (spriteType == "sheet") {
             this.slice({ lines, cols });
+            this.animator = new SpriteAnimator({ ...animations });
+        } else {
+            this.frameWidth = this.img.width;
+            this.frameHeight = this.img.height;
         }
-        this.animator = new SpriteAnimator({ ...animations });
     }
 
     slice({ lines, cols }) {
@@ -27,7 +30,7 @@ class Sprite {
     }
 
     draw() {
-        const [x, y] = this.animator.getCurrentFrame();
+        const [x, y] = this.type == "sheet" ? this.animator.getCurrentFrame() : [0, 0];
         let mx = this.gameObject.x - this.frameWidth / 2;
         let my = this.gameObject.y - this.frameHeight / 2;
         if (window["debug_collider"] == true) {
