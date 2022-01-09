@@ -1,8 +1,12 @@
 class Map extends GameObject {
-    constructor({ spriteName, widthTile, heightTile }) {
-        super({ x: 0, y: 0, spriteName, spriteType: "sprite" });
+    constructor({ spriteName, widthTile = 16, heightTile = 16 }) {
+        super({ row: 0, col: 0, spriteName, spriteType: "sprite" });
         this.img = Game.getAsset(spriteName);
-        console.log(this.sprite);
+        this.tileWidth=widthTile;
+        this.tileHeight=heightTile;
+    }
+    static getPositionCoordinates(row,col){
+        return [row*map.tileWidth,col*map.tileHeight];
     }
 }
 

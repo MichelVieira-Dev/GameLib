@@ -23,12 +23,12 @@
             }
             .container-canvas {
                 border: 1px solid #fff;
-                /* width: 640px;
-                height: 360px; */
-                width: 1280px;
-                height: 720px;
+                width: 640px;
+                height: 360px;
+                /* width: 1280px;
+                height: 720px; */
                 outline: none;
-                /* transform: scale(2); */
+                transform: scale(1.5);
             }
             canvas {
                 image-rendering: pixelated !important;
@@ -38,8 +38,8 @@
     <body>
         <main>
             <div class="container-canvas">
-                <!-- <canvas width="640" height="360" id="myCanvas"></canvas> -->
-                <canvas width="1280" height="720" id="myCanvas"></canvas>
+                <canvas width="640" height="360" id="myCanvas"></canvas>
+                <!-- <canvas width="1280" height="720" id="myCanvas"></canvas> -->
             </div>
         </main>
         <script src="Dependencias/auxiliares.js"></script>
@@ -63,15 +63,16 @@
             const initFunction = async () => {
                 window.worldmap = new Map({ spriteName: "worldmap" });
                 window.obj = new GameObject({
-                    x: 50,
-                    y: 50,
-                    spriteName: "pocoes",
+                    row: -15,
+                    col: -31,
+                    velocity:1,
+                    spriteName: "teste",
                     spriteType: "sheet",
-                    lines: 2,
-                    cols: 5,
+                    lines: 4,
+                    cols: 6,
                     rigid: true,
                     animations: {
-                        idle: { frames: [[4, 1]] },
+                        idle: { frames: [[1, 0]] },
                         especial: {
                             ms: 50,
                             frames: [
@@ -81,8 +82,48 @@
                                 [3, 0],
                             ],
                         },
+                        right: {
+                            ms: 100,
+                            frames: [
+                                [0, 2],
+                                [1, 2],
+                                [2, 2],
+                                [3, 2],
+                                [4, 2],
+                            ],
+                        },
+                        left: {
+                            ms: 100,
+                            frames: [
+                                [0, 1],
+                                [1, 1],
+                                [2, 1],
+                                [3, 1],
+                                [4, 1],
+                            ],
+                        },
+                        up: {
+                            ms: 100,
+                            frames: [
+                                [0, 3],
+                                [1, 3],
+                                [2, 3],
+                                [3, 3],
+                                [4, 3],
+                            ],
+                        },
+                        down: {
+                            ms: 100,
+                            frames: [
+                                [0, 0],
+                                [1, 0],
+                                [2, 0],
+                                [3, 0],
+                                [4, 0],
+                            ],
+                        },
                     },
-                    currentAnimation: "idle",
+                    currentAnimation: "right",
                 });
 
                 // window.projetil1 = new Projetil({
@@ -95,6 +136,7 @@
 
             game.init(
                 initFunction,
+                { src: "Sprites/teste.png", name: "teste" },
                 { src: "Sprites/sprite_animation.png", name: "pocoes" },
                 { src: "mapa/map2.png", name: "worldmap" }
             );

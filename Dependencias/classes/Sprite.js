@@ -31,8 +31,8 @@ class Sprite {
 
     draw() {
         const [x, y] = this.type == "sheet" ? this.animator.getCurrentFrame() : [0, 0];
-        let mx = this.gameObject.x - this.frameWidth / 2;
-        let my = this.gameObject.y - this.frameHeight / 2;
+        let mx = this.gameObject.x// - this.frameWidth / 2;
+        let my = this.gameObject.y// - this.frameHeight / 2;
         if (window["debug_collider"] == true) {
             Game.ctx.strokeStyle = "#f00";
             Game.ctx.strokeRect(mx, my, this.frameWidth, this.frameHeight);

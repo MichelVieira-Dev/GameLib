@@ -20,6 +20,7 @@ class InputController {
 
         document.addEventListener("mousedown", (e) => {
             const mouse = getMousePos(Game.canvas, e);
+            console.log(mouse)
             InputController.mousePress = true;
             Particles.createExplosion({ x: mouse.x, y: mouse.y, count_particles: 100 });
         });
