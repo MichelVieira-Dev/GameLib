@@ -1,8 +1,8 @@
 class LocalElements {
     constructor({ gameObject, width, height, color, strokeColor, typeElement }) {
         this.gameObject = gameObject;
-        this.width = width;
-        this.height = height;
+        this.width = width || 50;
+        this.height = height || 50;
         this.color = color || "#000";
         this.strokeColor = strokeColor || "#fff";
         this.type = typeElement || "rect";
@@ -14,6 +14,7 @@ class LocalElements {
     draw() {
         if (this.type == "rect") {
             Game.ctx.fillStyle = this.color;
+            // Game.ctx.fillRect(this.gameObject.x, this.gameObject.y, this.width, this.height);
             Game.ctx.fillRect(this.gameObject.x, this.gameObject.y, this.width, this.height);
         } else if (this.type == "circ") {
             // Game.ctx.save();

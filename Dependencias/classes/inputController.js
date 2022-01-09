@@ -20,18 +20,18 @@ class InputController {
 
         document.addEventListener("mousedown", (e) => {
             const mouse = getMousePos(Game.canvas, e);
-            console.log(mouse)
+            console.log(mouse);
             InputController.mousePress = true;
             Particles.createExplosion({ x: mouse.x, y: mouse.y, count_particles: 100 });
         });
 
-        var mouse = { x: 0, y: 0 };
-        var obTeste = new ParticleAnimation({ gameObject: mouse, animationName: "bubble", ms: 20 });
+        // var mouse = { x: 0, y: 0 };
+        // var obTeste = new ParticleAnimation({ gameObject: mouse, animationName: "bubble", ms: 20 });
 
         document.addEventListener("mousemove", (e) => {
-            mouse = getMousePos(Game.canvas, e);
+            // mouse = getMousePos(Game.canvas, e);
             InputController.mousePress = true;
-            obTeste.update(mouse);
+            // obTeste.update(mouse);
         });
         document.addEventListener("mouseup", (e) => {
             InputController.mousePress = false;

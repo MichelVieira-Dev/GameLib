@@ -1,19 +1,21 @@
-class Map extends GameObject {
+class Map extends MapObject {
     constructor({ spriteName, widthTile = 16, heightTile = 16 }) {
         super({ row: 0, col: 0, spriteName, spriteType: "sprite" });
         this.img = Game.getAsset(spriteName);
-        this.tileWidth=widthTile;
-        this.tileHeight=heightTile;
+        this.tileWidth = widthTile;
+        this.tileHeight = heightTile;
     }
-    static getPositionCoordinates(row,col){
-        return [row*map.tileWidth,col*map.tileHeight];
+    static getPositionCoordinates(col, row) {
+        return [row * map.tileWidth, col * map.tileHeight];
     }
 
-    static moveTo(gameobject,rowDest,colDest){
-        const [x,y] = Map.getPositionCoordinates(rowDest,colDest);
-        if(gameobject.x != x || gameobject.y != y){
-            gameobject.rigidbody.addForce({x,y,stopOnArrival:true});
-        }else{gameobject.inMove=false;}
+    static moveTo(gameobject, rowDest, colDest) {
+        const [x, y] = Map.getPositionCoordinates(rowDest, colDest);
+        if (gameobject.x != x || gameobject.y != y) {
+            gameobject.rigidbody.addForce({ x, y, stopOnArrival: true });
+        } else {
+            gameobject.inMove = false;
+        }
     }
 }
 
