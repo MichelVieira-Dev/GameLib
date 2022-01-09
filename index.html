@@ -26,7 +26,7 @@
                 width: 640px;
                 height: 360px;
                 outline: none;
-                /* transform: scale(1.3); */
+                transform: scale(1.3);
             }
             canvas {
                 image-rendering: pixelated !important;
@@ -49,6 +49,7 @@
         <script src="Dependencias/classes/LocalElements.js"></script>
         <script src="Dependencias/classes/RigidBody.js"></script>
         <script src="Dependencias/classes/Particles.js"></script>
+        <script src="Dependencias/classes/ParticlesAnimation.js"></script>
         <script src="Dependencias/classes/Projetil.js"></script>
         <script src="Dependencias/classes/FrameController.js"></script>
         <script>
@@ -62,8 +63,9 @@
                     spriteType: "sheet",
                     lines: 2,
                     cols: 5,
+                    rigid: true,
                     animations: {
-                        idle: { frames: [[0, 0]] },
+                        idle: { frames: [[4, 1]] },
                         especial: {
                             ms: 50,
                             frames: [

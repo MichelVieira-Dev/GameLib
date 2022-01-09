@@ -7,7 +7,7 @@ class Particles extends GameObject {
         color = "#000",
         type = "explosion",
         typeElement = "rect",
-        strokeColor,
+        strokeColor = ["#000"],
     }) {
         super({
             x,
@@ -19,26 +19,26 @@ class Particles extends GameObject {
             typeElement,
             strokeColor,
         });
-
-        this.typeElement = typeElement;
+        this.destroy = false;
         this.created = true;
         this.alpha = 0.06;
+        this.type = type;
         if (type == "explosion") {
-            this.angle = Math.atan2(Math.random() - 0.5, Math.random() - 0.5);
             this.alpha = 1;
+            this.angle = Math.atan2(Math.random() - 0.5, Math.random() - 0.5);
             this.velocity = {
-                y: Math.sin(this.angle) * getRandomArbitrary(0.5, 2.5),
-                x: Math.cos(this.angle) * getRandomArbitrary(0.5, 2.5),
+                y: Math.sin(this.angle) * getRandomArbitrary(0.1, 1),
+                x: Math.cos(this.angle) * getRandomArbitrary(0.1, 1),
             };
         } else {
-            this.velocity = 0.5;
+            this.velocity = 0.1;
             this.rigidbody = new RigidBody({ gameobject: this });
         }
     }
 
     static createExplosion({ x, y, count_particles, colors = ["#000", "#333"] }) {
         for (let i = 0; i < count_particles; i++) {
-            let size = getRandomInt(1, 4);
+            let size = getRandomInt(0.2, 4);
             new Particles({
                 x,
                 y,
@@ -49,58 +49,46 @@ class Particles extends GameObject {
         }
     }
 
-    static createBubbles({
-        x,
-        y,
-        count_particles,
-        colors = ["#222", "#333"],
-        strokeColors = ["#333", "#666"],
-    }) {
-        for (let i = 0; i < count_particles; i++) {
-            let size = getRandomInt(1, 4);
-            let myColor = getRandomInt(0, colors.length - 1);
-            new Particles({
-                x: getRandomInt(x - 10, x + 10),
-                y: getRandomInt(y - 20, y + 15),
-                width: size,
-                height: size,
-                color: colors[myColor],
-                strokeColor: strokeColors[myColor],
-                type: "bubbles",
-                typeElement: "circ-stroke",
+    updateExplosion() {
+        if (this.type == "explosion") {
+            this.x += this.velocity.x;
+            this.y += this.velocity.y;
+            this.velocity.y += 0.02;
+            this.alpha -= 0.01;
+        }
+    }
+    updateBubbles() {
+        if (this.type == "bubbles") {
+            if (this.created) {
+                this.sprite.radius += 0.01;
+                this.alpha += 0.001;
+                if (this.alpha > getRandomArbitrary(0.1, 0.4)) {
+                    this.created = false;
+                }
+            } else {
+                this.alpha -= 0.001;
+            }
+            this.rigidbody.addForce({
+                y: this.y - getRandomArbitrary(0.1, 0.4),
+                x: this.x + getRandomArbitrary(-0.2, 0.2),
             });
         }
     }
 }
+
 Particles.prototype.update = function () {
-    if (this.type == "explosion") {
-        this.x += this.velocity.x;
-        this.y += this.velocity.y;
-        this.alpha -= 0.01;
-    } else {
-        if (this.created) {
-            this.alpha += 0.001;
-            if (this.alpha > getRandomArbitrary(0.1, 0.4)) {
-                this.created = false;
-            }
-        } else {
-            this.alpha -= 0.0001;
-        }
-        this.rigidbody.addForce({
-            y: this.y - getRandomArbitrary(0.1, 0.4),
-            x: this.x + getRandomArbitrary(-0.1, 0.1),
-        });
-    }
+    this.updateExplosion();
+    this.updateBubbles();
     if (this.alpha <= 0) {
-        delete window.gameObjects[this.idGameObject];
         this.alpha = 0;
+        this.destroy = true;
         return;
     }
 };
 
 Particles.prototype.draw = function () {
     Game.ctx.save();
-    if (this.typeElement == "rect") {
+    if (this.sprite.type == "rect") {
         Game.ctx.fillStyle = this.sprite.color;
         Game.ctx.globalAlpha = this.alpha;
         Game.ctx.fillRect(this.x, this.y, this.sprite.width, this.sprite.height);

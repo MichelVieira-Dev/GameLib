@@ -8,7 +8,7 @@ class LocalElements {
         this.type = typeElement || "rect";
 
         if (this.type != "rect") {
-            this.radius = getRandomArbitrary(0.5, 2.5);
+            this.radius = getRandomArbitrary(2, 4);
         }
     }
     draw() {

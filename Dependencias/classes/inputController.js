@@ -19,34 +19,21 @@ class InputController {
         });
 
         document.addEventListener("mousedown", (e) => {
-            const target = getMousePos(Game.canvas, e);
+            const mouse = getMousePos(Game.canvas, e);
             InputController.mousePress = true;
-            Particles.createBubbles({
-                x: target.x,
-                y: target.y,
-                count_particles: 100,
-                colors: ["#7da37d", "#7da37dd9", "#4191417d"],
-                strokeColors: ["#7da37dd9", "#7da37d", "#7da37dd9"],
-            });
-            // const target = getMousePos(Game.canvas, event);
-            // new Projetil({
-            //     x: 0,
-            //     y: 150,
-            //     target,
-            //     velocity: 2,
-            // });
+            Particles.createExplosion({ x: mouse.x, y: mouse.y, count_particles: 100 });
         });
 
+        var mouse = { x: 0, y: 0 };
+        var obTeste = new ParticleAnimation({ gameObject: mouse, animationName: "bubble", ms: 20 });
+
+        document.addEventListener("mousemove", (e) => {
+            mouse = getMousePos(Game.canvas, e);
+            InputController.mousePress = true;
+            obTeste.update(mouse);
+        });
         document.addEventListener("mouseup", (e) => {
             InputController.mousePress = false;
-
-            // const target = getMousePos(Game.canvas, event);
-            // new Projetil({
-            //     x: 0,
-            //     y: 150,
-            //     target,
-            //     velocity: 2,
-            // });
         });
     }
 }

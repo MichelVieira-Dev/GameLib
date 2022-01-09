@@ -34,13 +34,19 @@ class Game {
         Game.ctx.imageSmoothingEnabled = false;
         Game.ctx.imageSmoothingQuality = "high";
 
-        window.gameObjects.map((obj) => {
-            obj.update();
+        //remove do array os objetos que devem ser destruidos
+        window.gameObjects = window.gameObjects.filter((obj) => {
+            return !obj.destroy;
         });
 
         window.gameObjects.map((obj) => {
+            obj.update();
             obj.draw();
         });
+
+        // window.gameObjects.map((obj) => {
+        //     obj.draw();
+        // });
 
         window.requestAnimationFrame(Game.GameLoop);
     }
