@@ -8,6 +8,13 @@ class Map extends GameObject {
     static getPositionCoordinates(row,col){
         return [row*map.tileWidth,col*map.tileHeight];
     }
+
+    static moveTo(gameobject,rowDest,colDest){
+        const [x,y] = Map.getPositionCoordinates(rowDest,colDest);
+        if(gameobject.x != x || gameobject.y != y){
+            gameobject.rigidbody.addForce({x,y,stopOnArrival:true});
+        }else{gameobject.inMove=false;}
+    }
 }
 
 Map.prototype.update = function () {};

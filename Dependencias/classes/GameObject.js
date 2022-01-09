@@ -2,8 +2,11 @@ class GameObject {
     constructor({ x,y,row, col, rigid, velocity, ...options }) {
         if(row != undefined)
             [x,y]=Map.getPositionCoordinates(row,col);
+        this.row=row
+        this.col=col;
         this.x = x;
         this.y = y;
+        this.inMove=false;
         this.velocity = velocity || 0;
         if (options.spriteType == "localElements") {
             this.sprite = new LocalElements({ gameObject: this, ...options });
@@ -26,6 +29,7 @@ class GameObject {
         if (this.sprite.type != "sheet") {
             return;
         }
+        
         if (InputController.keysPressed.length > 0) {
             if (this.moveMap.hasOwnProperty(InputController.keysPressed[0]))
                 this.move(this.moveMap[InputController.keysPressed[0]]);
@@ -54,6 +58,7 @@ class GameObject {
         target[property] = this[property] + value;
 
         if(property == "x" && value >0 && this.sprite.animator.currentAnim  != "right"){
+            Map.moveTo(this,-15,this.col+1);
             this.sprite.animator.setAnim('right');
         }
         
@@ -68,8 +73,7 @@ class GameObject {
         if(property == "y" && value < 0 && this.sprite.animator.currentAnim  != "up"){
             this.sprite.animator.setAnim('up');
         }
-
-        this.rigidbody.addForce(target, true);
+        // this.rigidbody.addForce(target, true);
     }
 
     especial() {
