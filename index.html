@@ -63,18 +63,18 @@
             var debug_collider = true;
             const initFunction = async () => {
                 window.worldmap = new Map({ spriteName: "worldmap" });
-                window.testeObj = new MapObject({
-                    row: -13,
-                    col: -11,
-                    velocity: 1,
-                    width: 16,
-                    height: 16,
-                    rigid: true,
-                    spriteType: "localElements",
-                });
+                // window.testeObj = new MapObject({
+                //     row: -13,
+                //     col: -11,
+                //     velocity: 1,
+                //     width: 16,
+                //     height: 16,
+                //     rigid: true,
+                //     spriteType: "localElements",
+                // });
                 window.obj = new MapObject({
-                    row: -31,
-                    col: -15,
+                    xOnMap: -15,
+                    yOnMap: -31,
                     velocity: 1,
                     spriteName: "teste",
                     spriteType: "sheet",

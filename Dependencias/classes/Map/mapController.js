@@ -5,12 +5,12 @@ class Map extends MapObject {
         this.tileWidth = widthTile;
         this.tileHeight = heightTile;
     }
-    static getPositionCoordinates(col, row) {
-        return [row * map.tileWidth, col * map.tileHeight];
+    static getPositionCoordinates(xOnMap, yOnMap) {
+        return [xOnMap * map.tileWidth, yOnMap * map.tileHeight];
     }
 
-    static moveTo(gameobject, rowDest, colDest) {
-        const [x, y] = Map.getPositionCoordinates(rowDest, colDest);
+    static moveTo(gameobject, { xOnMap, yOnMap }) {
+        const [x, y] = Map.getPositionCoordinates(xOnMap, yOnMap);
         if (gameobject.x != x || gameobject.y != y) {
             gameobject.rigidbody.addForce({ x, y, stopOnArrival: true });
         } else {
