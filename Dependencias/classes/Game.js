@@ -14,6 +14,17 @@ class Game {
         Game.assets = new Assets();
         await Game.assets.preload(...imgs);
         await createFunction();
+        new InputController({
+            KeyW: "up",
+            ArrowUp: "up",
+            KeyD: "right",
+            ArrowRight: "right",
+            KeyS: "down",
+            ArrowDown: "down",
+            KeyA: "left",
+            ArrowLeft: "left",
+            Space: "space",
+        });
         Game.GameLoop();
     }
 
@@ -28,7 +39,7 @@ class Game {
         });
 
         window.gameObjects.map((obj) => {
-            obj.sprite.draw();
+            obj.draw();
         });
 
         window.requestAnimationFrame(Game.GameLoop);

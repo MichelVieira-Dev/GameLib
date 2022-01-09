@@ -2,9 +2,10 @@ class RigidBody {
     constructor({ gameobject }) {
         this.gameobject = gameobject;
         this.angle = null;
+        this.gameobject.velocity = this.gameobject.velocity || 0;
     }
 
-    addForce({ x, y }, stopOnArrival = false) {
+    addForce({ x = this.gameobject.x, y = this.gameobject.y }, stopOnArrival = false) {
         //-------------------------------------------------------------------- //
         //             ______________________________________________________  //
         // Serve para:      targertPosition = x e y do alvo                  | //
@@ -13,6 +14,7 @@ class RigidBody {
         //                                                                     //
         // Criada em: 08/01/2022 ----------------------------------------------//
         //-------------------------------------------------------------------- //
+
         if (this.gameobject.velocity === 0) return;
         if (this.angle == null || stopOnArrival) {
             this.angle = Math.atan2(y - this.gameobject.y, x - this.gameobject.x);

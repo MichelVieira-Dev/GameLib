@@ -1,8 +1,8 @@
 class Sprite {
     constructor({ spriteName, gameObject, spriteType, lines, cols, ...animations }) {
+        this.gameObject = gameObject;
         this.name = spriteName;
         this.img = Game.getAsset(spriteName);
-        this.gameObject = gameObject;
         this.type = spriteType || "single";
         if (spriteType == "sheet") {
             this.slice({ lines, cols });
@@ -28,7 +28,6 @@ class Sprite {
 
     draw() {
         const [x, y] = this.animator.getCurrentFrame();
-
         let mx = this.gameObject.x - this.frameWidth / 2;
         let my = this.gameObject.y - this.frameHeight / 2;
         if (window["debug_collider"] == true) {
