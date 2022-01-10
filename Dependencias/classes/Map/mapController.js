@@ -9,13 +9,14 @@ class Map extends MapObject {
         return [xOnMap * map.tileWidth, yOnMap * map.tileHeight];
     }
 
-    static moveTo(gameobject, { xOnMap, yOnMap }) {
-        const [x, y] = Map.getPositionCoordinates(xOnMap, yOnMap);
-        if (gameobject.x != x || gameobject.y != y) {
-            gameobject.rigidbody.addForce({ x, y, stopOnArrival: true });
-        } else {
-            gameobject.inMove = false;
+    static getTileIsWalked(xOnMap, yOnMap) {
+        let isWalked = map["chucks"].hasOwnProperty(xOnMap + "," + yOnMap)
+            ? map["chucks"][xOnMap + "," + yOnMap]
+            : true;
+        if (typeof isWalked != "object") {
+            return isWalked;
         }
+        return !isWalked["colider"];
     }
 }
 
