@@ -5,51 +5,75 @@ class MapObject extends GameObject {
         this.xOnMap = xOnMap;
         this.yOnMap = yOnMap;
         this.moveMap = {
-            left: { property: "xOnMap", value: -1 },
-            right: { property: "xOnMap", value: 1 },
-            up: { property: "yOnMap", value: -1 },
-            down: { property: "yOnMap", value: 1 },
+            left: { property: "xOnMap", value: -1, direction: "left" },
+            right: { property: "xOnMap", value: 1, direction: "right" },
+            up: { property: "yOnMap", value: -1, direction: "up" },
+            down: { property: "yOnMap", value: 1, direction: "down" },
         };
         this.timeRemainingSpecial = 0;
         this.inMove = false;
+        this.targetMove = null;
+        this.targetDirection = null;
     }
 
-    move({ property, value }) {
+    stopMove() {
+        const { yOnMap = this.yOnMap, xOnMap = this.xOnMap } = this.targetMove;
+        const [x, y] = Map.getPositionCoordinates(xOnMap, yOnMap);
+        this.x = x;
+        this.y = y;
+        this.yOnMap = yOnMap;
+        this.xOnMap = xOnMap;
+        this.inMove = false;
+        this.targetMove = null;
+        this.targetDirection = null;
+        if (
+            InputController.keysPressed.length <= 0 ||
+            (InputController.keysPressed.length > 0 &&
+                !this.moveMap.hasOwnProperty(InputController.keysPressed[0]))
+        ) {
+            this.sprite.animator.setAnim("idle");
+        }
+    }
+
+    move({ property, value, direction }) {
+        if (this.inMove) return;
+
         let target = {};
         target[property] = this[property] + value;
-        console.log(target, [this.xOnMap, this.yOnMap]);
-        return false;
-        if (property == "xOnMap" && value > 0 && this.sprite.animator.currentAnim != "right") {
+        this.targetMove = target;
+        this.targetDirection = direction;
+        this.inMove = true;
+        if (direction == "right" && this.sprite.animator.currentAnim != "right") {
             this.sprite.animator.setAnim("right");
         }
 
-        if (property == "xOnMap" && value < 0 && this.sprite.animator.currentAnim != "left") {
+        if (direction == "left" && this.sprite.animator.currentAnim != "left") {
             this.sprite.animator.setAnim("left");
         }
 
-        if (property == "yOnMap" && value > 0 && this.sprite.animator.currentAnim != "down") {
+        if (direction == "down" && this.sprite.animator.currentAnim != "down") {
             this.sprite.animator.setAnim("down");
         }
 
-        if (property == "yOnMap" && value < 0 && this.sprite.animator.currentAnim != "up") {
+        if (direction == "up" && this.sprite.animator.currentAnim != "up") {
             this.sprite.animator.setAnim("up");
         }
-        Map.moveTo(this, target);
-        // this.rigidbody.addForce(target, true);
     }
 }
 MapObject.prototype.update = function () {
     if (InputController.keysPressed.length > 0) {
         if (this.moveMap.hasOwnProperty(InputController.keysPressed[0]))
             this.move(this.moveMap[InputController.keysPressed[0]]);
-        else this.sprite.animator.setAnim("idle");
-    } else {
-        this.sprite.animator.setAnim("idle");
     }
     if (this.timeRemainingSpecial > 0 && this.timeRemainingSpecial < new Date().getTime()) {
         this.timeRemainingSpecial = 0;
         this.velocity = this.velocityOriginal;
-        this.sprite.animator.setAnim("idle");
+    }
+
+    if (this.inMove && this.targetMove != null) {
+        const { yOnMap = this.yOnMap, xOnMap = this.xOnMap } = this.targetMove;
+        const [x, y] = Map.getPositionCoordinates(xOnMap, yOnMap);
+        this.rigidbody.moveTo({ x, y }, true, []);
     }
 };
 

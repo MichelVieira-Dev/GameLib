@@ -28,7 +28,7 @@
                 /* width: 1280px;
                 height: 720px; */
                 outline: none;
-                transform: scale(1.5);
+                transform: scale(2);
             }
             canvas {
                 image-rendering: pixelated !important;
@@ -59,23 +59,23 @@
         <script src="Dependencias/classes/Map/worldMap.js"></script>
         <script src="Dependencias/classes/Map/mapController.js"></script>
         <script>
+            //XP CALC
+            // let levelTeste = 50;
+            // let a = Math.round(
+            //     ((50 * levelTeste + 1) * (levelTeste + 1) * (levelTeste + 1) -
+            //         150 * (levelTeste + 1) * (levelTeste + 1) +
+            //         400 * (levelTeste + 1)) /
+            //         3
+            // );
+
             const game = new Game(document.getElementById("myCanvas"));
-            var debug_collider = true;
+            var debug_collider = false;
             const initFunction = async () => {
                 window.worldmap = new Map({ spriteName: "worldmap" });
-                // window.testeObj = new MapObject({
-                //     row: -13,
-                //     col: -11,
-                //     velocity: 1,
-                //     width: 16,
-                //     height: 16,
-                //     rigid: true,
-                //     spriteType: "localElements",
-                // });
                 window.obj = new MapObject({
                     xOnMap: -15,
                     yOnMap: -31,
-                    velocity: 1,
+                    velocity: 0.8,
                     spriteName: "teste",
                     spriteType: "sheet",
                     lines: 4,

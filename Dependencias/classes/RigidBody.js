@@ -29,7 +29,11 @@ class RigidBody {
 
     moveTo(target) {
         let dist = getDistance(this.gameobject.x, this.gameobject.y, target.x, target.y);
-        if (Math.floor(dist) > 20) {
+        if (Math.floor(dist) <= 2) {
+            this.gameobject.stopMove();
+            return;
+        }
+        if (Math.floor(dist) > 2) {
             this.addForce(target, true);
         }
     }
