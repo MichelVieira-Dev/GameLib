@@ -36,9 +36,16 @@ class Particles extends GameObject {
         }
     }
 
-    static createExplosion({ x, y, count_particles, colors = ["#000", "#333"] }) {
+    static createExplosion({
+        x,
+        y,
+        count_particles,
+        colors = ["#000", "#333"],
+        minSize = 1,
+        maxSize = 2,
+    }) {
         for (let i = 0; i < count_particles; i++) {
-            let size = getRandomInt(1, 4);
+            let size = getRandomArbitrary(minSize, maxSize);
             new Particles({
                 x,
                 y,

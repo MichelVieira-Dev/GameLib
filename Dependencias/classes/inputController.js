@@ -1,6 +1,9 @@
 class InputController {
     static keysPressed = [];
     static mousePress = false;
+    static clickedObj = {};
+    static mousePosition = { x: 0, y: 0 };
+    static positionRect = [];
     constructor(map) {
         this.map = map || {};
 
@@ -20,17 +23,19 @@ class InputController {
 
         document.addEventListener("mousedown", (e) => {
             const mouse = getMousePos(Game.canvas, e);
+            InputController.clickedObj = {};
             InputController.mousePress = true;
-            Particles.createExplosion({ x: mouse.x, y: mouse.y, count_particles: 100 });
         });
 
         // var mouse = { x: 0, y: 0 };
         // var obTeste = new ParticleAnimation({ gameObject: mouse, animationName: "bubble", ms: 20 });
 
         document.addEventListener("mousemove", (e) => {
-            // mouse = getMousePos(Game.canvas, e);
-            InputController.mousePress = true;
-            // obTeste.update(mouse);
+            const mouse = getMousePos(Game.canvas, e);
+            const [x, y] = Map.getInvertedPositionCoordinates(mouse.x, mouse.y);
+            InputController.positionRect = Map.getPositionCoordinates(Math.floor(x), Math.floor(y));
+            InputController.mousePosition.x = mouse.x;
+            InputController.mousePosition.y = mouse.y;
         });
         document.addEventListener("mouseup", (e) => {
             InputController.mousePress = false;

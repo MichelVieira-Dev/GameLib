@@ -58,6 +58,10 @@
         <script src="Dependencias/classes/FrameController.js"></script>
         <script src="Dependencias/classes/Map/worldMap.js"></script>
         <script src="Dependencias/classes/Map/mapController.js"></script>
+        <script src="Dependencias/classes/Map/MapObjectListener.js"></script>
+        <script src="Dependencias/classes/Map/Entitys/RPGPerson.js"></script>
+        <script src="Dependencias/classes/Map/Entitys/Enemy.js"></script>
+        <script src="Dependencias/classes/Map/Entitys/Hero.js"></script>
         <script>
             //XP CALC
             // let levelTeste = 50;
@@ -72,7 +76,8 @@
             var debug_collider = false;
             const initFunction = async () => {
                 window.worldmap = new Map({ spriteName: "worldmap" });
-                window.obj = new MapObject({
+                window.obj = new Hero({
+                    name: "Michel Vieira",
                     xOnMap: -15,
                     yOnMap: -31,
                     velocity: 1,
@@ -136,12 +141,21 @@
                     currentAnimation: "idle",
                 });
 
-                // window.projetil1 = new Projetil({
-                //     x: -80,
-                //     y: 150,
-                //     target: { x: 5, y: 150 },
-                //     velocity: 1,
-                // });
+                window.projetil1 = new Enemy({
+                    name: "Teste",
+                    xOnMap: -10,
+                    yOnMap: -25,
+                    velocity: 1,
+                    spriteName: "teste",
+                    spriteType: "sheet",
+                    lines: 4,
+                    cols: 6,
+                    rigid: true,
+                    animations: {
+                        idle: { frames: [[1, 0]] },
+                    },
+                    currentAnimation: "idle",
+                });
             };
 
             game.init(

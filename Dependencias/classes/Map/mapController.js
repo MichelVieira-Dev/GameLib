@@ -9,6 +9,10 @@ class Map extends MapObject {
         return [xOnMap * map.tileWidth, yOnMap * map.tileHeight];
     }
 
+    static getInvertedPositionCoordinates(xOnMap, yOnMap) {
+        return [xOnMap / map.tileWidth, yOnMap / map.tileHeight];
+    }
+
     static getTileIsWalked(xOnMap, yOnMap) {
         let isWalked = map["chucks"].hasOwnProperty(xOnMap + "," + yOnMap)
             ? map["chucks"][xOnMap + "," + yOnMap]

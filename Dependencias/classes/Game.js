@@ -40,21 +40,33 @@ class Game {
             return !obj.destroy;
         });
 
-        
         window.gameObjects.map((obj) => {
             obj.update();
         });
 
-        window.gameObjects.sort((a,b)=>{
-            return b.y - a.y;
-        }).map((obj) => {
-            Game.ctx.save();
-            Game.ctx.translate(-window.obj.x + Game.canvas.width/2,-window.obj.y + Game.canvas.height/2);
-            Game.ctx.globalAlpha = 1;
-            obj.draw();
-            Game.ctx.restore();
-        });
+        window.gameObjects
+            .sort((a, b) => {
+                return b.y - a.y;
+            })
+            .map((obj) => {
+                Game.ctx.save();
+                Game.ctx.translate(
+                    -window.obj.x + Game.canvas.width / 2,
+                    -window.obj.y + Game.canvas.height / 2
+                );
+                Game.ctx.globalAlpha = 1;
+                Game.ctx.strokeStyle = "orange";
+                Game.ctx.strokeRect(
+                    InputController.positionRect[0],
+                    InputController.positionRect[1],
+                    window.worldmap.tileWidth,
+                    window.worldmap.tileHeight
+                );
+                obj.draw();
+                Game.ctx.restore();
+            });
 
+        // Game.ctx.fillRect(InputController.mousePosition.x, InputController.mousePosition.y, 50, 50);
         window.requestAnimationFrame(Game.GameLoop);
     }
 }
