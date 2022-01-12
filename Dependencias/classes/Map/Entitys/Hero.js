@@ -2,7 +2,6 @@ class Hero extends RPGPerson {
     constructor({ name, xOnMap = 0, yOnMap = 0, velocity = 2, atributtes, ...options }) {
         super({ name, xOnMap, yOnMap, velocity, atributtes, ...options });
         this.name = name;
-        this.childUpdate = super.update;
     }
 }
 Hero.prototype.stopMove = function () {
@@ -10,8 +9,16 @@ Hero.prototype.stopMove = function () {
     const [x, y] = Map.getPositionCoordinates(xOnMap, yOnMap);
     this.x = x;
     this.y = y;
+
+    //remove o colisor do mapa
+    Map.removeWall(this.xOnMap, this.yOnMap, this.name);
+
     this.yOnMap = yOnMap;
     this.xOnMap = xOnMap;
+
+    //adiciono o novo colisor
+    Map.addWall(this);
+
     this.inMove = false;
     this.targetMove = null;
     this.targetDirection = null;
@@ -34,10 +41,6 @@ Hero.prototype.update = function () {
         if (this.targetMove == null && !this.inMove && this.sprite.animator.currentAnim != "idle") {
             this.sprite.animator.setAnim("idle");
         }
-    }
-    if (this.timeRemainingSpecial > 0 && this.timeRemainingSpecial < new Date().getTime()) {
-        this.timeRemainingSpecial = 0;
-        this.velocity = this.velocityOriginal;
     }
     this.childUpdate();
 };

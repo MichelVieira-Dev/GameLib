@@ -1,10 +1,33 @@
 class Map extends MapObject {
+    static wall = {};
     constructor({ spriteName, widthTile = 16, heightTile = 16 }) {
         super({ row: 0, col: 0, spriteName, spriteType: "sprite" });
+        this.name = "worldmap";
         this.img = Game.getAsset(spriteName);
         this.tileWidth = widthTile;
         this.tileHeight = heightTile;
     }
+
+    static addWall(gameobject) {
+        if (!Map.wall.hasOwnProperty(gameobject.xOnMap + "," + gameobject.yOnMap)) {
+            Map.wall[gameobject.xOnMap + "," + gameobject.yOnMap] = [];
+        }
+        Map.wall[gameobject.xOnMap + "," + gameobject.yOnMap].push(gameobject);
+    }
+
+    static removeWall(xOnMap, yOnMap, name) {
+        if (Map.wall.hasOwnProperty(xOnMap + "," + yOnMap)) {
+            for (let i = 0; i < Map.wall[xOnMap + "," + yOnMap].length; i++) {
+                if (Map.wall[xOnMap + "," + yOnMap][i]["name"] == name) {
+                    Map.wall[xOnMap + "," + yOnMap].splice(i, 1);
+                    if (Map.wall[xOnMap + "," + yOnMap].length <= 0)
+                        delete Map.wall[xOnMap + "," + yOnMap];
+                    break;
+                }
+            }
+        }
+    }
+
     static getPositionCoordinates(xOnMap, yOnMap) {
         return [xOnMap * map.tileWidth, yOnMap * map.tileHeight];
     }
@@ -16,11 +39,23 @@ class Map extends MapObject {
     static getTileIsWalked(xOnMap, yOnMap) {
         let isWalked = map["chucks"].hasOwnProperty(xOnMap + "," + yOnMap)
             ? map["chucks"][xOnMap + "," + yOnMap]
-            : true;
+            : { colider: false };
         if (typeof isWalked != "object") {
             return isWalked;
         }
-        return !isWalked["colider"];
+        if (isWalked["colider"] == true) return !isWalked["colider"];
+
+        //checkColision on static objects
+        if (Map.wall.hasOwnProperty(xOnMap + "," + yOnMap)) {
+            let obj = {};
+            obj["rigidbody"] = { isCollider: false };
+            for (let i = 0; i < Map.wall[xOnMap + "," + yOnMap].length; i++) {
+                obj = Map.wall[xOnMap + "," + yOnMap][i];
+                if (obj.rigidbody.isCollider == true) break;
+            }
+            return !obj.rigidbody.isCollider;
+        }
+        return true;
     }
 }
 

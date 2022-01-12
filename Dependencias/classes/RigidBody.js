@@ -1,8 +1,9 @@
 class RigidBody {
-    constructor({ gameobject }) {
+    constructor({ gameobject, isCollider }) {
         this.gameobject = gameobject;
         this.angle = null;
         this.gameobject.velocity = this.gameobject.velocity || 0;
+        this.isCollider = isCollider || true;
     }
 
     addForce({ x = this.gameobject.x, y = this.gameobject.y }, stopOnArrival = false) {

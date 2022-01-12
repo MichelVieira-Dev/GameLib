@@ -30,7 +30,17 @@ class GameObject {
         }
         return false;
     }
-
+    onClickMe() {
+        if (
+            this.mouseColliding(this, InputController.mousePosition) &&
+            InputController.mousePress &&
+            !InputController.clickedObj.hasOwnProperty(this.name)
+        ) {
+            InputController.clickedObj[this.name] = true;
+            return true;
+        }
+        return false;
+    }
     update() {}
     draw() {
         this.sprite.draw();

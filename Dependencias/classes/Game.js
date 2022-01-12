@@ -1,6 +1,8 @@
 class Game {
-    constructor(canvas) {
-        Game.canvas = canvas;
+    static canvas;
+    constructor(container) {
+        Game.container = document.querySelector("." + container);
+        this.createHiPPICanvas(640, 360);
         Game.ctx = Game.canvas.getContext("2d");
         Game.frameController = new FrameController();
         window.gameObjects = [];
@@ -8,6 +10,17 @@ class Game {
 
     static getAsset(name) {
         return Game.assets.images[name] || null;
+    }
+    createHiPPICanvas(w, h, r) {
+        Game.canvas = document.createElement("canvas");
+        let ratio = r || window.devicePixelRatio;
+        Game.canvas.width = w * ratio;
+        Game.canvas.height = h * ratio;
+        Game.canvas.style.width = w + "px";
+        Game.canvas.style.height = h + "px";
+        Game.canvas.getContext("2d").scale(ratio, ratio);
+        Game.container.appendChild(Game.canvas);
+        return Game.canvas;
     }
 
     async init(createFunction = async () => {}, ...imgs) {

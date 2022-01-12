@@ -4,6 +4,9 @@ class MapObject extends GameObject {
         super({ x, y, rigid: true, velocity, ...options });
         this.xOnMap = xOnMap;
         this.yOnMap = yOnMap;
+
+        Map.addWall(this);
+
         this.moveMap = {
             left: { property: "xOnMap", value: -1, direction: "left" },
             right: { property: "xOnMap", value: 1, direction: "right" },
@@ -21,11 +24,21 @@ class MapObject extends GameObject {
         const [x, y] = Map.getPositionCoordinates(xOnMap, yOnMap);
         this.x = x;
         this.y = y;
+
+        //remove o colisor do mapa
+        Map.removeWall(this.xOnMap, this.yOnMap, this.name);
+
         this.yOnMap = yOnMap;
         this.xOnMap = xOnMap;
+
+        //adiciono o novo colisor
+        Map.addWall(this);
+
         this.inMove = false;
         this.targetMove = null;
         this.targetDirection = null;
+
+        this.sprite.animator.setAnim("idle");
     }
 
     move({ property, value, direction }) {

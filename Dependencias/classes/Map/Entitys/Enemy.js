@@ -14,4 +14,5 @@ Enemy.prototype.update = function () {
     if (this.onClickMe()) {
         console.log(this.name, this.atributtes);
     }
+    this.childUpdate();
 };
