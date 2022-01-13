@@ -54,6 +54,7 @@
         <script src="Dependencias/classes/FrameController.js"></script>
         <script src="Dependencias/classes/Map/worldMap.js"></script>
         <script src="Dependencias/classes/Map/mapController.js"></script>
+        <script src="Dependencias/classes/Map/Navigator.js"></script>
         <script src="Dependencias/classes/Map/MapObjectListener.js"></script>
         <script src="Dependencias/classes/Map/Entitys/RPGPerson.js"></script>
         <script src="Dependencias/classes/Map/Entitys/Enemy.js"></script>
@@ -68,95 +69,95 @@
             //         3
             // );
 
-            var grid = [
-                [0, 0, 0, 0, 0, 0, 0, 0],
-                [0, 0, 0, 0, 0, 0, 0, 0],
-                [0, 0, 0, 0, 0, 0, 0, 0],
-                [0, 0, 0, 0, 0, 0, 0, 0],
-            ];
+            // var grid = [
+            //     [0, 0, 0, 0, 0, 0, 0, 0],
+            //     [0, 0, 0, 0, 0, 0, 0, 0],
+            //     [0, 0, 0, 0, 0, 0, 0, 0],
+            //     [0, 0, 0, 0, 0, 0, 0, 0],
+            // ];
 
-            function pathfinding(start, end) {
-                this.end = end;
-                start["distance"] = 0;
-                const openL = [start];
-                const closeL = {};
-                var current = openL[0];
-                var tentativas = 0;
+            // function pathfinding(start, end) {
+            //     this.end = end;
+            //     start["distance"] = 0;
+            //     const openL = [start];
+            //     const closeL = {};
+            //     var current = openL[0];
+            //     var tentativas = 0;
 
-                this.getTileParents = function (current) {
-                    const parents = [
-                        { x: -1, y: 0 }, // a esquerda
-                        { x: 1, y: 0 }, // a direita
-                        { x: 0, y: -1 }, // acima
-                        { x: 0, y: 1 }, // abaixo
-                    ];
-                    var retorno = [];
-                    for (let i = 0; i < parents.length; i++) {
-                        if (
-                            grid.length - 1 >= current.y + parents[i].y &&
-                            current.y + parents[i].y >= 0 &&
-                            grid[0].length - 1 >= current.x + parents[i].x &&
-                            current.x + parents[i].x >= 0
-                        ) {
-                            const y = current.y + parents[i].y;
-                            const x = current.x + parents[i].x;
-                            let thisParent = grid[y][x];
-                            if (thisParent == 0)
-                                retorno.push({
-                                    x,
-                                    y,
-                                    parent: current,
-                                    distance: Math.abs(getDistance(this.end.x, this.end.y, x, y)),
-                                });
-                        }
-                    }
-                    return retorno;
-                };
+            //     this.getTileParents = function (current) {
+            //         const parents = [
+            //             { x: -1, y: 0 }, // a esquerda
+            //             { x: 1, y: 0 }, // a direita
+            //             { x: 0, y: -1 }, // acima
+            //             { x: 0, y: 1 }, // abaixo
+            //         ];
+            //         var retorno = [];
+            //         for (let i = 0; i < parents.length; i++) {
+            //             if (
+            //                 grid.length - 1 >= current.y + parents[i].y &&
+            //                 current.y + parents[i].y >= 0 &&
+            //                 grid[0].length - 1 >= current.x + parents[i].x &&
+            //                 current.x + parents[i].x >= 0
+            //             ) {
+            //                 const y = current.y + parents[i].y;
+            //                 const x = current.x + parents[i].x;
+            //                 let thisParent = grid[y][x];
+            //                 if (thisParent == 0)
+            //                     retorno.push({
+            //                         x,
+            //                         y,
+            //                         parent: current,
+            //                         distance: Math.abs(getDistance(this.end.x, this.end.y, x, y)),
+            //                     });
+            //             }
+            //         }
+            //         return retorno;
+            //     };
 
-                while (
-                    tentativas < 1000 &&
-                    openL.length > 0 &&
-                    (current.x != end.x || current.y != end.y)
-                ) {
-                    openL.sort((a, b) => {
-                        return a.distance - b.distance;
-                    });
+            //     while (
+            //         tentativas < 1000 &&
+            //         openL.length > 0 &&
+            //         (current.x != end.x || current.y != end.y)
+            //     ) {
+            //         openL.sort((a, b) => {
+            //             return a.distance - b.distance;
+            //         });
 
-                    //pega o primeiro elemento da lista aberta e remove ele da lista
-                    current = openL.shift();
+            //         //pega o primeiro elemento da lista aberta e remove ele da lista
+            //         current = openL.shift();
 
-                    //pego todos os vizinhos e adiciono na lista aberta
-                    const parents = this.getTileParents(current);
-                    parents.forEach((el) => {
-                        if (!Object.keys(closeL).includes(el.x + "," + el.y)) {
-                            openL.push(el);
-                        }
-                    });
+            //         //pego todos os vizinhos e adiciono na lista aberta
+            //         const parents = this.getTileParents(current);
+            //         parents.forEach((el) => {
+            //             if (!Object.keys(closeL).includes(el.x + "," + el.y)) {
+            //                 openL.push(el);
+            //             }
+            //         });
 
-                    //adiciono o nó atual na lista fechada
-                    closeL[current.x + "," + current.y] = current;
+            //         //adiciono o nó atual na lista fechada
+            //         closeL[current.x + "," + current.y] = current;
 
-                    // console.log(current);
+            //         // console.log(current);
 
-                    tentativas += 1;
-                }
+            //         tentativas += 1;
+            //     }
 
-                //monta o caminho percorrendo pelo parent
-                let path = [];
-                while (current.x !== start.x || current.y !== start.y) {
-                    path.unshift(current);
-                    if (current.parent == null) {
-                        break;
-                    }
-                    current = current.parent;
-                }
+            //     //monta o caminho percorrendo pelo parent
+            //     let path = [];
+            //     while (current.x !== start.x || current.y !== start.y) {
+            //         path.unshift(current);
+            //         if (current.parent == null) {
+            //             break;
+            //         }
+            //         current = current.parent;
+            //     }
 
-                console.log(tentativas);
-                return path;
-            }
-            console.log(grid);
-            let r = pathfinding({ x: 0, y: 0 }, { x: 7, y: 0 });
-            console.log(r);
+            //     console.log(tentativas);
+            //     return path;
+            // }
+            // console.log(grid);
+            // let r = pathfinding({ x: 0, y: 0 }, { x: 7, y: 0 });
+            // console.log(r);
 
             const game = new Game("container-canvas");
             var debug_collider = false;

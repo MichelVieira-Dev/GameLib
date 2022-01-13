@@ -7,6 +7,8 @@ class RPGPerson extends MapObject {
             damage: 20,
             xpByDeath: 10,
         };
+
+        this.navigator = new Navigator({ gameobject: this });
         this.childUpdate = super.update;
     }
 

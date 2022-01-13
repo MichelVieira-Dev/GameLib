@@ -23,6 +23,10 @@ class InputController {
 
         document.addEventListener("mousedown", (e) => {
             const mouse = getMousePos(Game.canvas, e);
+            const [x, y] = Map.getInvertedPositionCoordinates(mouse.x, mouse.y);
+            console.log(x, y, Math.floor(x), Math.floor(y));
+            window.obj.navigator.getPath({ x: Math.floor(x), y: Math.floor(y) });
+
             InputController.clickedObj = {};
             InputController.mousePress = true;
         });
