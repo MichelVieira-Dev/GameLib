@@ -23,9 +23,9 @@ class Game {
         return Game.canvas;
     }
 
-    async init(createFunction = async () => {}, ...imgs) {
-        Game.assets = new Assets();
-        await Game.assets.preload(...imgs);
+    async init(createFunction = async () => {}, imgs = {}) {
+        Game.assets = { images: imgs }
+        await loadAssets(Game.assets.images, Image);
         await createFunction();
         new InputController({
             KeyW: "up",
