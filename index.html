@@ -39,7 +39,6 @@
             </div>
         </main>
         <script src="Dependencias/auxiliares.js"></script>
-        <script src="Dependencias/classes/AssetsController.js"></script>
         <script src="Dependencias/classes/Game.js"></script>
         <script src="Dependencias/classes/InputController.js"></script>
         <script src="Dependencias/classes/Sprite.js"></script>
@@ -296,9 +295,11 @@
 
             game.init(
                 initFunction,
-                { src: "Sprites/teste.png", name: "teste" },
-                { src: "Sprites/sprite_animation.png", name: "pocoes" },
-                { src: "mapa/map2.png", name: "worldmap" }
+                imgs = { 
+                    teste: "Sprites/teste.png",
+                    pocoes: "Sprites/sprite_animation.png",
+                    worldmap: "mapa/map2.png"
+                }
             );
         </script>
     </body>
